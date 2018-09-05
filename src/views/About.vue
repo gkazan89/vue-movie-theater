@@ -40,55 +40,19 @@ export default {
   data: function() {
     return {
       message: "User",
-      showtimes: [
-        {
-          "showtime_id": 2,
-          "time": "2018-09-01T23:00:00.000Z",
-          "movie": "James Bond",
-          "theater": 2,
-          "buyTicket": false,
-          "soldOut": false
-
-        },
-        {
-          "showtime_id": 3,
-          "time": "2018-09-01T23:00:00.000Z",
-          "movie": "The Avengers",
-          "theater": 4,
-          "buyTicket": false,
-          "soldOut": false
-
-        },
-        {
-          "showtime_id": 4,
-          "time": "2018-09-01T23:00:00.000Z",
-          "movie": "Star Wars",
-          "theater": 3,
-          "buyTicket": false,
-          "soldOut": false
-
-        },
-        {
-          "showtime_id": 5,
-          "time": "2018-09-01T23:00:00.000Z",
-          "movie": "Black Panther",
-          "theater": 1,
-          "buyTicket": false,
-          "soldOut": false
-
-        }
-      ],
-      newUser: {first_name: "", last_name: "", email: "", credit_card: "", cvv: "", expiration_date: "2020-09-04T20:49:33.050Z"}
+      showtimes: [],
+      newUser: {first_name: "", last_name: "", email: "", credit_card: "", cvv: "", expiration_date: ""},
+      newTicket: {user_id: "", showtime_id: "", seat: ""}
     };
   },
   created: function() {
-    // axios.get("http://localhost:3000/api/showtimes").then(
-    //   function(response) {
-    //     console.log("showtimes:");
-    //     console.log(response);
-    //     this.showtimes = response.data;
-    //   }.bind(this)
-    // );
+    axios.get("http://localhost:3000/api/showtimes").then(
+      function(response) {
+        console.log("showtimes:");
+        console.log(response);
+        this.showtimes = response.data;
+      }.bind(this)
+    );
   },
   methods: {
     buyTicket: function(showtime) {
@@ -99,7 +63,7 @@ export default {
     },
     purchase: function(showtime) {
       // create user
-      var params = {
+      var params1 = {
         first_name: this.newUser.first_name,
         last_name: this.newUser.last_name,
         email: this.newUser.email,
@@ -107,11 +71,41 @@ export default {
         cvv: this.newUser.cvv,
         expiration_date: "2020-09-04T20:49:33.050Z"
       };
-      axios.post("http://localhost:3000/api/users", params).then(
+      axios.post("http://localhost:3000/api/users", params1).then(
         console.log("USER CREATED!"));
+
       // create ticket
+      // going to hard code the user_id for now will come up with better way later
+      var params2 = {
+        user_id: 2,
+        showtime_id: showtime.showtime_id,
+        seat: 2
+      };
+      axios.post("http://localhost:3000/api/tickets", params2).then(
+        console.log("TICKET CREATED!"));
+    
       console.log("LET'S GO TO THE MOVIES!");
-    }
+    },
+    // newUser: function() {
+    //   var params = {
+    //     first_name: this.newUser.first_name,
+    //     last_name: this.newUser.last_name,
+    //     email: this.newUser.email,
+    //     credit_card: this.newUser.credit_card,
+    //     cvv: this.newUser.cvv,
+    //     expiration_date: "2020-09-04T20:49:33.050Z"
+    //   };
+    //   axios.post("http://localhost:3000/api/users", params).then(
+    //     console.log("USER CREATED!"));
+    // },
+    // newTicket: function(showtime) {
+    //   console.log("SHOWTIME ID:");
+    //   console.log(showtime.showtime_id);
+    //   var params = {
+    //     user_id = this.
+    //   };
+    //   axios.post("http://localhost:3000/api/tickets", params);
+    // }
   },
   computed: {}
 };
