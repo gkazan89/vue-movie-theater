@@ -8,13 +8,21 @@
       <p>Showtime: {{showtime.time}}</p>
       <p>Theater: {{showtime.theater}}</p>
     </div>
-    <button>Add Showtime</button>
+    <button type="button" v-on:click="addShowtime()">Add Showtime</button>
+    <div class="newShowtime" v-if="newShowtime">
+      <h3>Add Showtime:</h3>
+      <!-- will display movie ids  -->  
+      <div>
+        Movie_id:<input v-model.number="showtimeCreate.movie_id" type="number">
+        Theater_id:<input v-model.number="showtimeCreate.theater_id" type="number">
+      </div>
+      <button type="button" v-on:click="saveShowtime(showtimeCreate)">Submit Showtime</button>
+    </div>
     <h3>Auditoriums</h3>
     <div v-for="theater in theaters">
       <p>Theater_ID: {{theater.theater_id}}
       <p>Capacity: {{theater.capacity}}</p>
     </div>
-    <!-- finish the button -->
     <button type="button" v-on:click="addTheater()">Add Theater</button>
     <div class="newTheater" v-if="newTheater">
       <h3>Add Theater:</h3>
@@ -56,6 +64,8 @@ export default {
       movieCreate: { name: "", runtime: "" },
       newTheater: false,
       theaterCreate: {capacity: ""},
+      newShowtime: false,
+      showtimeCreate: {movie_id: "", theater_id: ""},
       message: "Movie Theater App"
     };
   },
@@ -103,11 +113,22 @@ export default {
       console.log(this.newTheater);
       console.log("ADD THEATER");
     },
-    saveTheater: function() {
+    saveTheater: function(theaterCreate) {
       var params = {
         capacity: this.theaterCreate.capacity
       };
       axios.post("http://localhost:3000/api/theaters", params);
+      console.log("SUCCESS!");
+    },
+    addShowtime: function() {
+      this.newShowtime = !this.newShowtime;
+    },
+    saveShowtime: function(showtimeCreate) {
+      var params = {
+        movie_id: this.showtimeCreate.movie_id,
+        theater_id: this.showtimeCreate.theater_id
+      };
+      axios.post("http://localhost:3000/api/showtimes", params);
       console.log("SUCCESS!");
     }
   },
