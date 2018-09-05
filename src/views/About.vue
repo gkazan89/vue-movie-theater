@@ -61,6 +61,7 @@ export default {
       console.log("BUYING TICKET?");
       console.log(showtime.buyTicket);
     },
+    // there's probably a way to do this without params1 & params2
     purchase: function(showtime) {
       // create user
       var params1 = {
@@ -86,26 +87,6 @@ export default {
     
       console.log("LET'S GO TO THE MOVIES!");
     },
-    // newUser: function() {
-    //   var params = {
-    //     first_name: this.newUser.first_name,
-    //     last_name: this.newUser.last_name,
-    //     email: this.newUser.email,
-    //     credit_card: this.newUser.credit_card,
-    //     cvv: this.newUser.cvv,
-    //     expiration_date: "2020-09-04T20:49:33.050Z"
-    //   };
-    //   axios.post("http://localhost:3000/api/users", params).then(
-    //     console.log("USER CREATED!"));
-    // },
-    // newTicket: function(showtime) {
-    //   console.log("SHOWTIME ID:");
-    //   console.log(showtime.showtime_id);
-    //   var params = {
-    //     user_id = this.
-    //   };
-    //   axios.post("http://localhost:3000/api/tickets", params);
-    // }
   },
   computed: {}
 };
