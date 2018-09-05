@@ -14,7 +14,15 @@
       <p>Theater_ID: {{theater.theater_id}}
       <p>Capacity: {{theater.capacity}}</p>
     </div>
-    <button>Add Theater</button>
+    <!-- finish the button -->
+    <button type="button" v-on:click="addTheater()">Add Theater</button>
+    <div class="newTheater" v-if="newTheater">
+      <h3>Add Theater:</h3>
+      <div>
+        Capacity:<input v-model.number="theaterCreate.capacity" type="number">
+      </div>
+      <button type="button" v-on:click="saveTheater(theaterCreate)">Submit Theater</button>
+    </div>
     <h3>Movies</h3>
     <div v-for="movie in movies">
       <p>Movie: {{movie.name}}</p>
@@ -46,6 +54,8 @@ export default {
       movies: [],
       newMovie: false,
       movieCreate: { name: "", runtime: "" },
+      newTheater: false,
+      theaterCreate: {capacity: ""},
       message: "Movie Theater App"
     };
   },
@@ -86,6 +96,18 @@ export default {
         runtime: this.movieCreate.runtime
       };
       axios.post("http://localhost:3000/api/movies", params);
+      console.log("SUCCESS!");
+    },
+    addTheater: function() {
+      this.newTheater = !this.newTheater;
+      console.log(this.newTheater);
+      console.log("ADD THEATER");
+    },
+    saveTheater: function() {
+      var params = {
+        capacity: this.theaterCreate.capacity
+      };
+      axios.post("http://localhost:3000/api/theaters", params);
       console.log("SUCCESS!");
     }
   },
