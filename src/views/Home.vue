@@ -8,6 +8,7 @@
       <p>Showtime: {{showtime.time}}</p>
       <p>Theater: {{showtime.theater}}</p>
     </div>
+    <button>Add Showtime</button>
     <h3>Auditoriums</h3>
     <div v-for="theater in theaters">
       <p>Theater_ID: {{theater.theater_id}}
@@ -15,6 +16,19 @@
     </div>
     <button>Add Theater</button>
     <h3>Movies</h3>
+    <div v-for="movie in movies">
+      <p>Movie: {{movie.name}}</p>
+      <p>Runtime: {{movie.runtime}}</p>
+    </div>
+    <button type="button" v-on:click="addMovie()">Add Movie</button>
+    <div class="newMovie" v-if="newMovie">
+      <h3>Add Movie:</h3>
+      <div>
+        Name:<input type="text" v-model="movieCreate.name">
+        Runtime:<input v-model.number="movieCreate.runtime" type="number">
+      </div>
+      <button type="button" v-on:click="saveMovie(movieCreate)">Submit Movie</button>
+    </div>
   </div>
 </template>
 
@@ -30,6 +44,8 @@ export default {
       showtimes: [],
       theaters: [],
       movies: [],
+      newMovie: false,
+      movieCreate: { name: "", runtime: "" },
       message: "Movie Theater App"
     };
   },
@@ -48,8 +64,31 @@ export default {
         this.theaters = response.data;
       }.bind(this)
     );
+    axios.get("http://localhost:3000/api/movies").then(
+      function(response) {
+        console.log("movies:");
+        console.log(response);
+        this.movies = response.data;
+      }.bind(this)
+    );
   },
-  methods: {},
+  methods: {
+    addMovie: function() {
+      this.newMovie = !this.newMovie;
+      console.log(this.newMovie);
+      console.log("ADD MOVIE");
+    },
+    saveMovie: function(movieCreate) {
+      console.log("READY TO SHOW!");
+      console.log(this.movieCreate);
+      var params = {
+        name: this.movieCreate.name,
+        runtime: this.movieCreate.runtime
+      };
+      axios.post("http://localhost:3000/api/movies", params);
+      console.log("SUCCESS!");
+    }
+  },
   computed: {}
 };
 </script>
