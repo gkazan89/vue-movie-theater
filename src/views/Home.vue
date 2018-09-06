@@ -35,6 +35,7 @@
     <div v-for="movie in movies">
       <p>Movie: {{movie.name}}</p>
       <p>Runtime: {{movie.runtime}}</p>
+      <p>Movie_ID: {{movie.movie_id}}</p>
     </div>
     <button type="button" v-on:click="addMovie()">Add Movie</button>
     <div class="newMovie" v-if="newMovie">

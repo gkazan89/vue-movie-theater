@@ -6,6 +6,10 @@
       <p>Movie: {{showtime.movie}}</p>
       <p>Showtime: {{showtime.time}}</p>
       <p>Theater: {{showtime.theater}}</p>
+      <p>Capacity: {{showtime.capacity}}</p>
+      <div class="soldOut">
+
+      </div>
       <button type="button" v-on:click="buyTicket(showtime)">
         Buy Ticket
       </button>
@@ -41,10 +45,12 @@ export default {
     return {
       message: "User",
       showtimes: [],
+      tickets: [],
       newUser: {first_name: "", last_name: "", email: "", credit_card: "", cvv: "", expiration_date: ""},
       newTicket: {user_id: "", showtime_id: "", seat: ""}
     };
   },
+
   created: function() {
     axios.get("http://localhost:3000/api/showtimes").then(
       function(response) {
@@ -53,8 +59,21 @@ export default {
         this.showtimes = response.data;
       }.bind(this)
     );
+
+    axios.get("http://localhost:3000/api/tickets").then(
+      function(response) {
+        console.log("TICKETS:");
+        console.log(response);
+        this.tickets = response.data;
+      }.bind(this)
+    );
   },
   methods: {
+    soldOut: function(showtime) {
+      if (showtime.ticketSold >= showtime.capacity) {
+        console.log("SOLD OUT");
+      }
+    },
     buyTicket: function(showtime) {
       showtime.buyTicket = !showtime.buyTicket;
       console.log(showtime.movie);
@@ -63,6 +82,8 @@ export default {
     },
     // there's probably a way to do this without params1 & params2
     purchase: function(showtime) {
+      showtime.ticketSold++;
+      console.log(showtime.ticketSold);
       // create user
       var params1 = {
         first_name: this.newUser.first_name,
