@@ -1,9 +1,15 @@
 <template>
   <div class="about">
     <h1>{{message}}</h1>
-    <h2>All Orders</h2>
+    <h2>All Tickets:</h2>
     <div v-for="ticket in tickets">
       <p>Movie: {{ticket.movie}}</p>
+      <p>Time: {{ticket.time}}</p>
+      <p>Theater: {{ticket.theater}}</p>
+    </div>
+    <h2>Tickets sorted by film:</h2>
+    <div v-for="ticket in orderBy(tickets, 'movie')">
+      <p><strong>Movie: {{ticket.movie}}</strong></p>
       <p>Time: {{ticket.time}}</p>
       <p>Theater: {{ticket.theater}}</p>
     </div>
@@ -11,7 +17,6 @@
 </template>
 
 <style>
-
 </style>
 
 <script>
@@ -21,7 +26,7 @@ export default {
   data: function() {
     return {
       tickets: [],
-      message: "View Orders"
+      message: "View Orders",
     };
   },
   created: function() {
