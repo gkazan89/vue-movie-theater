@@ -7,8 +7,9 @@
       <p>Showtime: {{showtime.time}}</p>
       <p>Theater: {{showtime.theater}}</p>
       <p>Capacity: {{showtime.capacity}}</p>
-      <div class="soldOut">
-
+      <p>Open Seats: {{showtime.open_seats}}</p>
+      <div class="soldOut" v-if="showtime.open_seats === 0">
+        <p>SOLD OUT</p>
       </div>
       <button type="button" v-on:click="buyTicket(showtime)">
         Buy Ticket
@@ -34,6 +35,10 @@
 
 .checkout {
   border: solid black 4px;
+}
+
+.soldOut {
+  color: red;
 }
 </style>
 
