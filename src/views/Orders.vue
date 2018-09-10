@@ -3,7 +3,7 @@
     <h1>{{message}}</h1>
     <h2>All Tickets:</h2>
     <div v-for="ticket in tickets">
-      <p>Movie: {{ticket.movie}}</p>
+      <p><strong>Movie: {{ticket.movie}}</strong></p>
       <p>Time: {{ticket.time}}</p>
       <p>Theater: {{ticket.theater}}</p>
     </div>
@@ -39,6 +39,8 @@ export default {
   },
   methods: {
   },
-  computed: {}
+  computed: {
+
+  }
 };
 </script>
