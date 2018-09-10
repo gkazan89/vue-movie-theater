@@ -9,9 +9,9 @@
       <p>Capacity: {{showtime.capacity}}</p>
       <p>Open Seats: {{showtime.open_seats}}</p>
       <div class="soldOut" v-if="showtime.open_seats === 0">
-        <p>SOLD OUT</p>
+        SOLD OUT
       </div>
-      <button type="button" v-on:click="buyTicket(showtime)">
+      <button type="button" v-else v-on:click="buyTicket(showtime)">
         Buy Ticket
       </button>
       <div class="checkout" v-if="showtime.buyTicket">
