@@ -99,15 +99,21 @@ export default {
       axios.post("http://localhost:3000/api/users", params1).then(
         console.log("USER CREATED!"));
 
+      //
+      // need to display error messages 
+
       // create ticket
       // going to hard code the user_id for now will come up with better way later
       var params2 = {
-        showtime_id: showtime.showtime_id,
+        // SOMETHING HERE NEEDS TO BE CHANGED!
+        // email: this.newUser.email,
+        showtime_id: this.showtime_id,
       };
       axios.post("http://localhost:3000/api/tickets", params2).then(
         console.log("TICKET CREATED!"));
-    
       console.log("LET'S GO TO THE MOVIES!");
+      showtime.buyTicket = !showtime.buyTicket;
+
     },
   },
   computed: {}
