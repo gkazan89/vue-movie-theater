@@ -13,8 +13,10 @@
       <h3>Add Showtime:</h3>
       <!-- will display movie ids  -->  
       <div>
+        <!-- not sure why open seats isn't saving to db -->
         Movie_id:<input v-model.number="showtimeCreate.movie_id" type="number">
         Theater_id:<input v-model.number="showtimeCreate.theater_id" type="number">
+        Open Seats:<input v-model.number="showtimeCreate.openSeats" type="number">
       </div>
       <button type="button" v-on:click="saveShowtime(showtimeCreate)">Submit Showtime</button>
     </div>
@@ -66,7 +68,7 @@ export default {
       newTheater: false,
       theaterCreate: {capacity: ""},
       newShowtime: false,
-      showtimeCreate: {movie_id: "", theater_id: ""},
+      showtimeCreate: {movie_id: "", theater_id: "", openSeats: ""},
       message: "Movie Theater App"
     };
   },
