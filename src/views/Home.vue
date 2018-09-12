@@ -17,6 +17,7 @@
         Movie_id:<input v-model.number="showtimeCreate.movie_id" type="number">
         Theater_id:<input v-model.number="showtimeCreate.theater_id" type="number">
         Open Seats:<input v-model.number="showtimeCreate.openSeats" type="number">
+        Time:<input v-model="showtimeCreate.time" type="datetime-local">
       </div>
       <button type="button" v-on:click="saveShowtime(showtimeCreate)">Submit Showtime</button>
     </div>
@@ -66,9 +67,9 @@ export default {
       newMovie: false,
       movieCreate: { name: "", runtime: "" },
       newTheater: false,
-      theaterCreate: {capacity: ""},
+      theaterCreate: { capacity: "" },
       newShowtime: false,
-      showtimeCreate: {movie_id: "", theater_id: "", openSeats: ""},
+      showtimeCreate: { movie_id: "", theater_id: "", openSeats: "", time: "" },
       message: "Movie Theater App"
     };
   },
@@ -108,8 +109,14 @@ export default {
         name: this.movieCreate.name,
         runtime: this.movieCreate.runtime
       };
-      axios.post("http://localhost:3000/api/movies", params);
+      axios.post("http://localhost:3000/api/movies", params)
+        .then(function(response) {
+          console.log("SUCCESS!", response);
+          this.movies.push(response.data);
+        }.bind(this)
+        );
       console.log("SUCCESS!");
+      this.newMovie = !this.newMovie;
     },
     addTheater: function() {
       this.newTheater = !this.newTheater;
@@ -120,8 +127,14 @@ export default {
       var params = {
         capacity: this.theaterCreate.capacity
       };
-      axios.post("http://localhost:3000/api/theaters", params);
+      axios.post("http://localhost:3000/api/theaters", params)
+        .then(function(response) {
+          console.log("SUCCESS", response);
+          this.theaters.push(response.data);
+        }.bind(this)
+        );
       console.log("SUCCESS!");
+      this.newTheater = !this.newTheater;
     },
     addShowtime: function() {
       this.newShowtime = !this.newShowtime;
@@ -129,10 +142,16 @@ export default {
     saveShowtime: function(showtimeCreate) {
       var params = {
         movie_id: this.showtimeCreate.movie_id,
-        theater_id: this.showtimeCreate.theater_id
+        theater_id: this.showtimeCreate.theater_id,
+        openSeats: this.showtimeCreate.openSeats,
+        time: this.showtimeCreate.time
       };
-      axios.post("http://localhost:3000/api/showtimes", params);
-      console.log("SUCCESS!");
+      axios.post("http://localhost:3000/api/showtimes", params).then(function(response) {
+        console.log("SUCCESS!", response);
+        this.showtimes.push(response.data);         
+      }.bind(this)
+      );
+      this.newShowtime = !this.newShowtime;
     }
   },
   computed: {}
