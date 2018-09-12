@@ -18,12 +18,7 @@
         <h3>Buy Ticket for:</h3>
         <p>{{showtime.movie}}</p>
         <ul>
-          <li v-for:"error in errors" class="error">
-            {{error}}
-          </li>  
-        </ul>
-        <ul>
-          <li v-for:"error in errors2" class="error">
+          <li v-for="error in errors" class="error">
             {{error}}
           </li>  
         </ul>
@@ -62,7 +57,6 @@ export default {
       showtimes: [],
       tickets: [],
       errors: [],
-      errors2: [],
       newUser: {
         first_name: "",
         last_name: "",
@@ -100,13 +94,14 @@ export default {
     },
     buyTicket: function(showtime) {
       showtime.buyTicket = !showtime.buyTicket;
+      this.showtime_id = showtime.showtime_id;
+      console.log("HELLO???");
+      console.log(showtime, this.showtime_id);
       console.log(showtime.movie);
       console.log("BUYING TICKET?");
       console.log(showtime.buyTicket);
     },
-    // there's probably a way to do this without params1 & params2
     purchase: function(showtime) {
-      // create user
       this.errors = [];
       var params = {
         first_name: this.newUser.first_name,
@@ -114,13 +109,15 @@ export default {
         email: this.newUser.email,
         credit_card: this.newUser.credit_card,
         cvv: this.newUser.cvv,
-        showtime_id: this.showtime.showtime_id
+        showtime_id: this.showtime_id
       };
       axios
         .post("http://localhost:3000/api/tickets", params)
         .then(
           function(response) {
             console.log("TICKET CREATED!", response);
+            this.tickets.push(response.data);
+            showtime.buyTicket = !showtime.buyTicket;
           }.bind(this)
         )
         .catch(
@@ -129,43 +126,7 @@ export default {
             this.errors = error.response.data.errors;
           }.bind(this)
         );
-
-      console.log("LET'S GO TO THE MOVIES!");
-      showtime.buyTicket = !showtime.buyTicket;
-      console.log("reset");
     }
-
-    // axios.post("http://localhost:3000/api/users", params).then(
-    //   console.log("USER CREATED!"))
-    //   .catch(
-    //     function(error) {
-    //       console.log(error.response.data.errors);
-    //       this.errors = error.response.data.errors;
-    //     }.bind(this)
-    //   );
-
-    //
-    // need to display error messages
-
-    // create ticket
-    // // going to hard code the user_id for now will come up with better way later
-    // this.errors2 = [];
-    // var params2 = {
-    //   // SOMETHING HERE NEEDS TO BE CHANGED!
-    //   // email: this.newUser.email,
-    //   showtime_id: this.showtime_id
-    // };
-    // axios
-    //   .post("http://localhost:3000/api/tickets", params2)
-    //   .then(console.log("TICKET CREATED!"))
-    //   .catch(
-    //     function(error) {
-    //       console.log(error.response.data.errors);
-    //       this.errors = error.response.data.errors;
-    //     }.bind(this)
-    //   );
-    // console.log("LET'S GO TO THE MOVIES!");
-    // showtime.buyTicket = !showtime.buyTicket;
   },
   computed: {}
 };
