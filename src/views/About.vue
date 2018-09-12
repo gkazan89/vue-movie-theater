@@ -57,7 +57,7 @@ export default {
   },
 
   created: function() {
-    axios.get("http://localhost:3000/api/showtimes").then(
+    axios.get("/api/showtimes").then(
       function(response) {
         console.log("showtimes:");
         console.log(response);
@@ -65,7 +65,7 @@ export default {
       }.bind(this)
     );
 
-    axios.get("http://localhost:3000/api/tickets").then(
+    axios.get("/api/tickets").then(
       function(response) {
         console.log("TICKETS:");
         console.log(response);
@@ -96,7 +96,7 @@ export default {
         cvv: this.newUser.cvv,
         expiration_date: "2020-09-04T20:49:33.050Z"
       };
-      axios.post("http://localhost:3000/api/users", params1).then(
+      axios.post("/api/users", params1).then(
         console.log("USER CREATED!"));
 
       // create ticket
@@ -104,7 +104,7 @@ export default {
       var params2 = {
         showtime_id: showtime.showtime_id,
       };
-      axios.post("http://localhost:3000/api/tickets", params2).then(
+      axios.post("/api/tickets", params2).then(
         console.log("TICKET CREATED!"));
     
       console.log("LET'S GO TO THE MOVIES!");

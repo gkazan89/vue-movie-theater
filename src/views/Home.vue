@@ -74,21 +74,21 @@ export default {
     };
   },
   created: function() {
-    axios.get("http://localhost:3000/api/showtimes").then(
+    axios.get("/api/showtimes").then(
       function(response) {
         console.log("showtimes:");
         console.log(response);
         this.showtimes = response.data;
       }.bind(this)
     );
-    axios.get("http://localhost:3000/api/theaters").then(
+    axios.get("/api/theaters").then(
       function(response) {
         console.log("theaters");
         console.log(response);
         this.theaters = response.data;
       }.bind(this)
     );
-    axios.get("http://localhost:3000/api/movies").then(
+    axios.get("/api/movies").then(
       function(response) {
         console.log("movies:");
         console.log(response);
@@ -109,7 +109,7 @@ export default {
         name: this.movieCreate.name,
         runtime: this.movieCreate.runtime
       };
-      axios.post("http://localhost:3000/api/movies", params)
+      axios.post("/api/movies", params)
         .then(function(response) {
           console.log("SUCCESS!", response);
           this.movies.push(response.data);
@@ -127,7 +127,7 @@ export default {
       var params = {
         capacity: this.theaterCreate.capacity
       };
-      axios.post("http://localhost:3000/api/theaters", params)
+      axios.post("/api/theaters", params)
         .then(function(response) {
           console.log("SUCCESS", response);
           this.theaters.push(response.data);
@@ -146,7 +146,7 @@ export default {
         openSeats: this.showtimeCreate.openSeats,
         time: this.showtimeCreate.time
       };
-      axios.post("http://localhost:3000/api/showtimes", params).then(function(response) {
+      axios.post("/api/showtimes", params).then(function(response) {
         console.log("SUCCESS!", response);
         this.showtimes.push(response.data);         
       }.bind(this)

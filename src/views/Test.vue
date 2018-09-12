@@ -70,7 +70,7 @@ export default {
   },
 
   created: function() {
-    axios.get("http://localhost:3000/api/showtimes").then(
+    axios.get("/api/showtimes").then(
       function(response) {
         console.log("showtimes:");
         console.log(response);
@@ -78,7 +78,7 @@ export default {
       }.bind(this)
     );
 
-    axios.get("http://localhost:3000/api/tickets").then(
+    axios.get("/api/tickets").then(
       function(response) {
         console.log("TICKETS:");
         console.log(response);
@@ -112,7 +112,7 @@ export default {
         showtime_id: this.showtime_id
       };
       axios
-        .post("http://localhost:3000/api/tickets", params)
+        .post("/api/tickets", params)
         .then(
           function(response) {
             console.log("TICKET CREATED!", response);

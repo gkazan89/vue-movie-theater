@@ -30,7 +30,7 @@ export default {
     };
   },
   created: function() {
-    axios.get("http://localhost:3000/api/tickets").then(
+    axios.get("/api/tickets").then(
       function(response) {
         console.log(response);
         this.tickets = response.data;
